@@ -37,7 +37,6 @@ type Plus =
     #if !FABLE_COMPILER
     static member        ``+`` (x: StringBuilder     , y: StringBuilder     , _mthd: Plus    ) = StringBuilder().Append(x).Append(y)
     static member        ``+`` (_: Id0               , _: Id0               , _mthd: Plus    ) = Id0 ""    
-    //static member        ``+`` (x: AggregateException, y: AggregateException, _mthd: Plus    ) = new AggregateException (seq {yield! x.InnerExceptions; yield! y.InnerExceptions})
     static member        ``+`` (x: exn               , y: exn               , _mthd: Plus    ) =
         let f (e: exn) = match e with :? AggregateException as a -> a.InnerExceptions :> seq<_> | _ -> Seq.singleton e
         new AggregateException (seq {yield! f x; yield! f y}) :> exn
@@ -48,7 +47,7 @@ type Plus =
         let f (e: exn) = match e with :? AggregateException as a -> a.Data0 :> seq<_> | _ -> Seq.singleton e
         AggregateException (seq {yield! f x; yield! f y}) :> exn
     #endif
-    
+
     static member inline Invoke (x: 'Plus) (y: 'Plus) : 'Plus =
         let inline call (mthd : ^M, input1 : ^I, input2 : ^I) = ((^M or ^I) : (static member ``+`` : _*_*_ -> _) input1, input2, mthd)
         call (Unchecked.defaultof<Plus>, x, y)
@@ -73,12 +72,6 @@ type Plus with
 
 type Plus with
 
-    static member inline ``+`` (x: Dictionary<'Key,'Value>, y: Dictionary<'Key,'Value>, _mthd: Plus) =
-                    let d = Dictionary<'Key,'Value> ()
-                    let plus = OptimizedClosures.FSharpFunc<_,_,_>.Adapt Plus.Invoke
-                    for KeyValue(k, v ) in x do d.[k] <- v
-                    for KeyValue(k, v') in y do d.[k] <- match d.TryGetValue k with true, v -> plus.Invoke (v, v') | _ -> v'
-                    d
 
     static member inline ``+`` (f: 'T->'Monoid, g: 'T->'Monoid, _mthd: Plus) = (fun x -> Plus.Invoke (f x) (g x)) : 'T->'Monoid
    
