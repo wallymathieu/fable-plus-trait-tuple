@@ -84,8 +84,6 @@ type Plus with
    
 
     static member inline ``+`` (x: 'a Lazy                   , y: 'a Lazy                   , _mthd: Plus    ) = lazy Plus.Invoke x.Value y.Value
-    static member        ``+`` (x: _ IObservable             , y                            , _mthd: Default3) = Observable.merge x y
-    static member        ``+`` (x: _ seq                     , y                            , _mthd: Default3) = Seq.append x y
     
 
 
