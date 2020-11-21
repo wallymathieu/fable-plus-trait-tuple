@@ -93,8 +93,6 @@ type Plus with
 
 type Plus with
 
-    static member inline ``+`` (x: Map<'a,'b>             , y                         , [<Optional>]_mthd: Plus) = failwith "Map!"
-
     static member inline ``+`` (x: Dictionary<'Key,'Value>, y: Dictionary<'Key,'Value>, [<Optional>]_mthd: Plus) =
                     let d = Dictionary<'Key,'Value> ()
                     let plus = OptimizedClosures.FSharpFunc<_,_,_>.Adapt Plus.Invoke
@@ -103,19 +101,11 @@ type Plus with
                     d
 
     static member inline ``+`` (f: 'T->'Monoid, g: 'T->'Monoid, [<Optional>]_mthd: Plus) = (fun x -> Plus.Invoke (f x) (g x)) : 'T->'Monoid
-
-    static member inline ``+`` (x: 'S Async   , y: 'S Async   , [<Optional>]_mthd: Plus) = failwithf "Async!"
-
-    static member inline ``+`` (x: 'a Expr    , y: 'a Expr    , [<Optional>]_mthd: Plus) : 'a Expr =
-                    let inline f (x: 'a)  : 'a -> 'a = Plus.Invoke x
-                    Expr.Cast<'a> (Expr.Application (Expr.Application (Expr.Value (f), x), y))
    
 
     static member inline ``+`` (x: 'a Lazy                   , y: 'a Lazy                   , [<Optional>]_mthd: Plus    ) = lazy Plus.Invoke x.Value y.Value
-    static member        ``+`` (x: _ ResizeArray             , y: _ ResizeArray             , [<Optional>]_mthd: Plus    ) = ResizeArray (Seq.append x y)
     static member        ``+`` (x: _ IObservable             , y                            , [<Optional>]_mthd: Default3) = Observable.merge x y
     static member        ``+`` (x: _ seq                     , y                            , [<Optional>]_mthd: Default3) = Seq.append x y
-    static member inline ``+`` (x: IDictionary<'K,'V>        , y: IDictionary<'K,'V>        , [<Optional>]_mthd: Default3) = failwith "Dictionary!" //Dict.unionWith Plus.Invoke x y
     
 
 
