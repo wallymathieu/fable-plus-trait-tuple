@@ -93,7 +93,7 @@ type Plus with
 
 type Plus with
 
-    static member inline ``+`` (x: Map<'a,'b>             , y                         , [<Optional>]_mthd: Plus) = failwith "!"
+    static member inline ``+`` (x: Map<'a,'b>             , y                         , [<Optional>]_mthd: Plus) = failwith "Map!"
 
     static member inline ``+`` (x: Dictionary<'Key,'Value>, y: Dictionary<'Key,'Value>, [<Optional>]_mthd: Plus) =
                     let d = Dictionary<'Key,'Value> ()
@@ -104,7 +104,7 @@ type Plus with
 
     static member inline ``+`` (f: 'T->'Monoid, g: 'T->'Monoid, [<Optional>]_mthd: Plus) = (fun x -> Plus.Invoke (f x) (g x)) : 'T->'Monoid
 
-    static member inline ``+`` (x: 'S Async   , y: 'S Async   , [<Optional>]_mthd: Plus) = failwithf "!"
+    static member inline ``+`` (x: 'S Async   , y: 'S Async   , [<Optional>]_mthd: Plus) = failwithf "Async!"
 
     static member inline ``+`` (x: 'a Expr    , y: 'a Expr    , [<Optional>]_mthd: Plus) : 'a Expr =
                     let inline f (x: 'a)  : 'a -> 'a = Plus.Invoke x
@@ -115,7 +115,7 @@ type Plus with
     static member        ``+`` (x: _ ResizeArray             , y: _ ResizeArray             , [<Optional>]_mthd: Plus    ) = ResizeArray (Seq.append x y)
     static member        ``+`` (x: _ IObservable             , y                            , [<Optional>]_mthd: Default3) = Observable.merge x y
     static member        ``+`` (x: _ seq                     , y                            , [<Optional>]_mthd: Default3) = Seq.append x y
-    static member inline ``+`` (x: IDictionary<'K,'V>        , y: IDictionary<'K,'V>        , [<Optional>]_mthd: Default3) = failwith "!" //Dict.unionWith Plus.Invoke x y
+    static member inline ``+`` (x: IDictionary<'K,'V>        , y: IDictionary<'K,'V>        , [<Optional>]_mthd: Default3) = failwith "Dictionary!" //Dict.unionWith Plus.Invoke x y
     
 
 

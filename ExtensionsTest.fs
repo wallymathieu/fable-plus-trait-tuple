@@ -13,19 +13,6 @@ let ExtensionsTest =
       testCase "semigroups 1"
         (fun () ->
             let lzy1 = Plus.Invoke (lazy [1]) (lazy [2;3])
-            let asy1 = Plus.Invoke (async.Return [1]) (async.Return [2;3])
-            
-            let mapA =
-                Map.empty
-                |> Map.add 1 (lazy "Hey")
-                |> Map.add 2 (lazy "Hello")
-
-            let mapB =
-                Map.empty
-                |> Map.add 3 (lazy " You")
-                |> Map.add 2 (lazy " World")
-
-            let mapAB = Plus.Invoke mapA mapB
             
             //let tup22 = ( 2) ++ ( 3) // compiles
             let tup22 = Plus.Invoke (1, 2) (2, 3) //does not compile
