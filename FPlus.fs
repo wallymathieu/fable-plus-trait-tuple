@@ -32,16 +32,13 @@ type Plus =
     static member        ``+`` (x: array<_>          , y                    , _mthd: Plus    ) = Array.append x y
     static member        ``+`` (()                   , ()                   , _mthd: Plus    ) = ()
     static member        ``+`` (x: bool              , y: bool              , _mthd: Plus    ) = x <> y
-    static member        ``+`` (x: Set<_>            , y                    , _mthd: Plus    ) = Set.union x y
-    
+
     #if !FABLE_COMPILER
-    static member        ``+`` (x: StringBuilder     , y: StringBuilder     , _mthd: Plus    ) = StringBuilder().Append(x).Append(y)
     static member        ``+`` (_: Id0               , _: Id0               , _mthd: Plus    ) = Id0 ""    
     static member        ``+`` (x: exn               , y: exn               , _mthd: Plus    ) =
         let f (e: exn) = match e with :? AggregateException as a -> a.InnerExceptions :> seq<_> | _ -> Seq.singleton e
         new AggregateException (seq {yield! f x; yield! f y}) :> exn
     #else
-    static member        ``+`` (x: StringBuilder     , y: StringBuilder     , _mthd: Plus    ) = StringBuilder().Append(string x).Append(string y)
     static member        ``+`` (_: Id0               , _: Id0               , _mthd: Plus    ) = Id0 ""
     static member        ``+`` (x: exn               , y: exn               , _mthd: Plus    ) =
         let f (e: exn) = match e with :? AggregateException as a -> a.Data0 :> seq<_> | _ -> Seq.singleton e
