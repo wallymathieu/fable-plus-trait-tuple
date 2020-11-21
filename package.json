@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "scripts": {
+        "test": "dotnet fable . --outDir bin --runScript ./bin /d"
+    },
+    "dependencies": {
+        "esm": "^3.2.25"
+    },
+    "name": "tests"
+}
